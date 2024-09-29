@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas Avanzadas</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .consulta {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #28a745;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #e9ecef;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .resultado {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Consultas Avanzadas</h2>
+
+    <div class="consulta">
+        <h3>¿Cuántos usuarios están registrados en un evento específico?</h3>
+        <form method="get">
+            <label for="evento_id">ID del Evento:</label>
+            <input type="text" name="evento_id" id="evento_id" required>
+            <button type="submit">Consultar</button>
+        </form>
+        {% if usuarios_registrados is not None %}
+            <div class="resultado">
+                <p>Número de usuarios registrados: {{ usuarios_registrados }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="consulta">
+        <h3>¿Cuántos eventos se están llevando a cabo este mes?</h3>
+        <div class="resultado">
+            <p>Número de eventos este mes: {{ eventos_mes }}</p>
+        </div>
+    </div>
+
+    <div class="consulta">
+        <h3>¿Quiénes son los usuarios más activos en términos de participación en eventos?</h3>
+        <ul>
+            {% for usuario in usuarios_activos %}
+                <li>User ID: {{ usuario.usuario }} - Participaciones: {{ usuario.participacion }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="consulta">
+        <h3>¿Cuántos eventos ha organizado un usuario en particular?</h3>
+        <form method="get">
+            <label for="usuario_id">ID del Usuario:</label>
+            <input type="text" name="usuario_id" id="usuario_id" required>
+            <button type="submit">Consultar</button>
+        </form>
+        {% if eventos_organizados is not None %}
+            <div class="resultado">
+                <p>Número de eventos organizados: {{ eventos_organizados }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'crear_evento' %}" class="boton">Regresar</a>
+
+</body>
+</html>
