@@ -31,27 +31,27 @@ def detalle_evento(request, evento_id):
     return render(request, 'eventos/detalle_evento.html', {'evento': evento})
 
 #----
-# Vista para mostrar información avanzada
+# mostrar información avanzada
 def consultas_avanzadas(request):
-    # 1. ¿Cuántos usuarios están registrados en un evento específico?
+    # usuarios que están registrados en un evento específico
     evento_id = request.GET.get('evento_id')
     if evento_id:
         usuarios_registrados = RegistroEvento.objects.filter(evento_id=evento_id).count()
     else:
         usuarios_registrados = None
 
-    # 2. ¿Cuántos eventos se están llevando a cabo este mes?
+    # eventos que se están llevando a cabo este mes
     fecha_actual = timezone.now()
     eventos_mes = Evento.objects.filter(fecha__month=fecha_actual.month, fecha__year=fecha_actual.year).count()
 
-    # 3. ¿Quiénes son los usuarios más activos en términos de participación en eventos?
+    # usuarios más activos en términos de participación en eventos?
     usuarios_activos = (
         RegistroEvento.objects.values('usuario')
         .annotate(participacion=Count('evento'))
         .order_by('-participacion')[:5]  # Los 5 usuarios más activos
     )
 
-    # 4. ¿Cuántos eventos ha organizado un usuario en particular?
+    # eventos organizados por un usuario en particular
     usuario_id = request.GET.get('usuario_id')
     if usuario_id:
         eventos_organizados = Evento.objects.filter(organizador_id=usuario_id).count()
@@ -73,7 +73,7 @@ class EventoForm(forms.ModelForm):
         model = Evento
         fields = ['nombre', 'descripcion', 'fecha', 'lugar', 'organizador']  # Campos a editar
 
-# Vista para editar un evento
+
 def editar_evento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
 
@@ -87,3 +87,11 @@ def editar_evento(request, evento_id):
 
     return render(request, 'eventos/editar_evento.html', {'form': form, 'evento': evento})
 
+def eliminar_evento(request, evento_id):
+    evento = get_object_or_404(Evento, id=evento_id)
+
+    if request.method == 'POST':
+        evento.delete()
+        return redirect('listar_eventos')
+
+    return render(request, 'eventos/eliminar_evento.html', {'evento': evento})

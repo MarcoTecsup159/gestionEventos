@@ -106,7 +106,7 @@
     <h2>Consultas Avanzadas</h2>
 
     <div class="consulta">
-        <h3>¿Cuántos usuarios están registrados en un evento específico?</h3>
+        <h3>Usuarios registrados en un evento específico</h3>
         <form method="get">
             <label for="evento_id">ID del Evento:</label>
             <input type="text" name="evento_id" id="evento_id" required>
@@ -120,14 +120,14 @@
     </div>
 
     <div class="consulta">
-        <h3>¿Cuántos eventos se están llevando a cabo este mes?</h3>
+        <h3>Eventos que se están llevando a cabo este mes</h3>
         <div class="resultado">
             <p>Número de eventos este mes: {{ eventos_mes }}</p>
         </div>
     </div>
 
     <div class="consulta">
-        <h3>¿Quiénes son los usuarios más activos en términos de participación en eventos?</h3>
+        <h3>Usuarios más activos en términos de participación en eventos</h3>
         <ul>
             {% for usuario in usuarios_activos %}
                 <li>User ID: {{ usuario.usuario }} - Participaciones: {{ usuario.participacion }}</li>
@@ -136,7 +136,7 @@
     </div>
 
     <div class="consulta">
-        <h3>¿Cuántos eventos ha organizado un usuario en particular?</h3>
+        <h3>Eventos que ha organizado un usuario en particular</h3>
         <form method="get">
             <label for="usuario_id">ID del Usuario:</label>
             <input type="text" name="usuario_id" id="usuario_id" required>
