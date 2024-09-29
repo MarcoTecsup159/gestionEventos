@@ -22,3 +22,4 @@ class RegistroEvento(models.Model):
 
     def __str__(self):
         return f'{self.usuario.username} registrado en {self.evento.nombre}'
+

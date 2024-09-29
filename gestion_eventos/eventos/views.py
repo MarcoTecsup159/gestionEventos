@@ -5,6 +5,7 @@ from .models import Evento, RegistroEvento
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.utils import timezone
+from django import forms
 
 # Create your views here.
 #crear eventos
@@ -65,3 +66,24 @@ def consultas_avanzadas(request):
     }
 
     return render(request, 'eventos/consultas_avanzadas.html', context)
+
+
+class EventoForm(forms.ModelForm):
+    class Meta:
+        model = Evento
+        fields = ['nombre', 'descripcion', 'fecha', 'lugar', 'organizador']  # Campos a editar
+
+# Vista para editar un evento
+def editar_evento(request, evento_id):
+    evento = get_object_or_404(Evento, id=evento_id)
+
+    if request.method == 'POST':
+        form = EventoForm(request.POST, instance=evento)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_evento', evento_id=evento.id)  # Redirige a la página de detalles del evento editado
+    else:
+        form = EventoForm(instance=evento)
+
+    return render(request, 'eventos/editar_evento.html', {'form': form, 'evento': evento})
+
