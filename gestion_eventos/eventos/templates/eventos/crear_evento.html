@@ -100,6 +100,22 @@
         footer p {
             font-size: 0.9em;
         }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #218838;
+        }
+
     </style>
 </head>
 <body>
@@ -114,8 +130,11 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
+            <br>
             <button type="submit">Crear evento</button>
         </form>
+
+        <a href="{% url 'listar_eventos' %}" class="boton">Lista de Eventos</a>
 
         <footer>
             <p>© 2024 Sistema de gestión de eventos</p>

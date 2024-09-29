@@ -80,6 +80,7 @@
         <p><strong>Lugar:</strong> {{ evento.lugar }}</p>
         <p><strong>Organizador:</strong> {{ evento.organizador.username }}</p>
         <a href="{% url 'registrar_evento' evento.id %}">Registrarse en este evento</a>
+        <a href="{% url 'listar_eventos' %}" class="boton">Lista de Eventos</a>
     </div>
 
     <footer>
